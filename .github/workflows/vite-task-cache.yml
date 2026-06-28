@@ -25,7 +25,7 @@ jobs:
 
       - name: Restore Vite Task cache
         id: vite-task-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: node_modules/.vite/task-cache
           key: vite-task-exp-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -57,7 +57,7 @@ jobs:
 
       - name: Save Vite Task cache
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: node_modules/.vite/task-cache
           key: vite-task-exp-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
