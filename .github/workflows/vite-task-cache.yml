@@ -28,9 +28,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: node_modules/.vite/task-cache
-          key: vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: vite-task-exp-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-
+            vite-task-exp-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}-
 
       - name: Inspect Vite+
         run: pnpm exec vp --version
@@ -60,4 +60,4 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: node_modules/.vite/task-cache
-          key: vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: vite-task-exp-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
