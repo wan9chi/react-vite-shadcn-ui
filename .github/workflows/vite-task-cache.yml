@@ -1,0 +1,59 @@
+name: Vite Task Cache Experiment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Restore Vite Task cache
+        id: vite-task-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules/.vite/task-cache
+          key: vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-
+
+      - name: Inspect Vite+
+        run: pnpm exec vp --version
+
+      - name: Run cached tasks
+        run: |
+          pnpm exec vp run build
+          pnpm exec vp run build
+          pnpm exec vp run lint
+          pnpm exec vp run lint
+          pnpm exec vp run task:stamp
+          rm -f dist/stamp.txt
+          pnpm exec vp run task:stamp
+
+      - name: Inspect task cache
+        if: always()
+        run: |
+          find node_modules/.vite/task-cache -maxdepth 3 -type f | sort || true
+          test -f dist/stamp.txt && cat dist/stamp.txt
+
+      - name: Save Vite Task cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: node_modules/.vite/task-cache
+          key: vite-task-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}-${{ github.run_id }}-${{ github.run_attempt }}

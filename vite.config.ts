@@ -1,10 +1,13 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vite-plus";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  run: {
+    cache: true,
+  },
   plugins: [
     react({
       babel: {
