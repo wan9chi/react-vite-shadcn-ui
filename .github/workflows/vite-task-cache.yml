@@ -41,15 +41,19 @@ jobs:
           pnpm exec vp run build
           pnpm exec vp run lint
           pnpm exec vp run lint
-          pnpm exec vp run task:stamp
+          pnpm exec vp run stamp
           rm -f dist/stamp.txt
-          pnpm exec vp run task:stamp
+          pnpm exec vp run stamp
 
       - name: Inspect task cache
         if: always()
         run: |
           find node_modules/.vite/task-cache -maxdepth 3 -type f | sort || true
-          test -f dist/stamp.txt && cat dist/stamp.txt
+          if test -f dist/stamp.txt; then
+            cat dist/stamp.txt
+          else
+            echo "dist/stamp.txt missing"
+          fi
 
       - name: Save Vite Task cache
         if: always()

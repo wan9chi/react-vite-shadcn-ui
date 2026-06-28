@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "task:stamp": "node scripts/stamp.mjs",
+    "build": "vp build",
+    "lint": "vp lint",
     "preview": "vite preview"
   },
   "dependencies": {

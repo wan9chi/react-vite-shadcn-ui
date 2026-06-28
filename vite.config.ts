@@ -7,6 +7,13 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   run: {
     cache: true,
+    tasks: {
+      stamp: {
+        command: "node scripts/stamp.mjs",
+        input: ["scripts/stamp.mjs"],
+        output: ["dist/stamp.txt"],
+      },
+    },
   },
   plugins: [
     react({
