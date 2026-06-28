@@ -8,6 +8,31 @@ export default defineConfig({
   run: {
     cache: true,
     tasks: {
+      "ci-build": {
+        command: "vp build",
+        input: [
+          "components.json",
+          "index.html",
+          "package.json",
+          "src/**",
+          "tailwind.config.ts",
+          "tsconfig*.json",
+          "vite.config.ts",
+        ],
+        output: ["dist/**"],
+      },
+      "ci-lint": {
+        command: "vp lint",
+        input: [
+          "components.json",
+          "eslint.config.js",
+          "package.json",
+          "src/**",
+          "tailwind.config.ts",
+          "tsconfig*.json",
+          "vite.config.ts",
+        ],
+      },
       stamp: {
         command: "node scripts/stamp.mjs",
         input: ["scripts/stamp.mjs"],

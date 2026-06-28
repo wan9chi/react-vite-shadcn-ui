@@ -37,10 +37,10 @@ jobs:
 
       - name: Run cached tasks
         run: |
-          pnpm exec vp run build
-          pnpm exec vp run build
-          pnpm exec vp run lint
-          pnpm exec vp run lint
+          pnpm exec vp run ci-build
+          pnpm exec vp run ci-build
+          pnpm exec vp run ci-lint
+          pnpm exec vp run ci-lint
           pnpm exec vp run stamp
           rm -f dist/stamp.txt
           pnpm exec vp run stamp
